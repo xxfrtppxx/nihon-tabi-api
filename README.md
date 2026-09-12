@@ -17,16 +17,21 @@ Backend REST API สำหรับแอพบันทึกการท่อ
 src/
   auth/            -- register, login, refresh, logout, guards, JWT strategy
   users/           -- profile ของ user ปัจจุบัน (GET/PATCH /users/me)
-  geo/             -- prefectures, municipalities (read-only, seed จาก GADM ทีหลัง)
+  geo/             -- prefectures, municipalities (read-only, metadata จาก DB)
   visits/          -- CRUD visits + photos
   stats/           -- GET /stats/me
   prisma/          -- PrismaService, PrismaModule
 prisma/
   schema.prisma
   migrations/
+  seed-data/        -- prefectures.json, municipalities.json (ผลิตจาก scripts/map-data/)
+scripts/
+  seed-geo.ts        -- upsert prefectures/municipalities จาก prisma/seed-data/*.json เข้า DB
+  map-data/           -- pipeline แปลง GADM shapefile → GeoJSON (ดู README ในนั้น)
+geo-data/
+  prefectures.geojson              -- polygon ทั้ง 47 จังหวัด (properties: {id})
+  municipalities/<prefectureId>.geojson  -- polygon เมือง/เขตของจังหวัดนั้น
 ```
-
-ยังไม่มี `scripts/import-geo.ts` — จะเพิ่มตอนทำ map data pipeline (ขั้นตอนที่ 2 ใน SYSTEM_DESIGN.md) ตอนนี้ `prefectures`/`municipalities` ในตารางยังว่างเปล่า
 
 ## Data model
 
@@ -34,7 +39,9 @@ prisma/
 
 ## Map data (GADM → GeoJSON → seed)
 
-Pipeline การแปลงข้อมูลขอบเขตจังหวัด/เมืองจาก GADM shapefile เป็น GeoJSON แล้ว seed เข้า DB อธิบายไว้ใน SYSTEM_DESIGN.md ข้อ 6 — เก็บ raw/intermediate geo files ไว้นอก git (ใน `.gitignore`) แล้ว commit เฉพาะ script + ไฟล์ simplified GeoJSON ที่ใช้จริง
+ทำเสร็จแล้ว — ดูขั้นตอนที่ [`scripts/map-data/README.md`](scripts/map-data/README.md) ผลลัพธ์ (`geo-data/*.geojson`, `prisma/seed-data/*.json`) commit ไว้ใน repo แล้ว ไม่ต้องรัน pipeline ใหม่เว้นแต่จะอัปเดตข้อมูล — รัน `npm run seed:geo` เพื่อ upsert เข้า DB ใหม่ (เช่นหลัง migrate ใน environment ใหม่)
+
+Polygon geometry ถูก serve เป็น static file ที่ `GET /geo/files/prefectures.geojson` และ `GET /geo/files/municipalities/:prefectureId.geojson` (ผ่าน `@nestjs/serve-static`) แยกจาก endpoint metadata (`/geo/prefectures` ฯลฯ) ที่มาจาก DB — client จับคู่กันด้วย `properties.id` ในไฟล์ GeoJSON ↔ `id` ที่ได้จาก DB endpoint
 
 ## Setup
 
@@ -61,6 +68,8 @@ PATCH  /users/me
 
 GET    /geo/prefectures
 GET    /geo/prefectures/:id/municipalities
+GET    /geo/files/prefectures.geojson
+GET    /geo/files/municipalities/:prefectureId.geojson
 
 GET    /visits?prefectureId=&status=      (ต้องมี access token, กรองเฉพาะของ user)
 POST   /visits
@@ -72,4 +81,4 @@ DELETE /photos/:id
 GET    /stats/me
 ```
 
-ยังไม่ทำ: Swagger docs (`@nestjs/swagger`), presigned upload URL ไป Cloudflare R2 (ตอนนี้ `POST /visits/:id/photos` รับ `url` ที่อัปโหลดไว้แล้วมาบันทึกเฉยๆ), และ seed ข้อมูล prefecture/municipality จริงจาก GADM (รอ map data pipeline)
+ยังไม่ทำ: Swagger docs (`@nestjs/swagger`), presigned upload URL ไป Cloudflare R2 (ตอนนี้ `POST /visits/:id/photos` รับ `url` ที่อัปโหลดไว้แล้วมาบันทึกเฉยๆ)

@@ -1,0 +1,378 @@
+[
+  {
+    "id": 1,
+    "nameJa": "北海道",
+    "nameEn": "Hokkaido",
+    "region": "Hokkaido",
+    "centroidLat": 43.3813,
+    "centroidLng": 142.56244
+  },
+  {
+    "id": 2,
+    "nameJa": "青森県",
+    "nameEn": "Aomori",
+    "region": "Tohoku",
+    "centroidLat": 40.78062,
+    "centroidLng": 140.83061
+  },
+  {
+    "id": 3,
+    "nameJa": "岩手県",
+    "nameEn": "Iwate",
+    "region": "Tohoku",
+    "centroidLat": 39.59326,
+    "centroidLng": 141.36172
+  },
+  {
+    "id": 4,
+    "nameJa": "宮城県",
+    "nameEn": "Miyagi",
+    "region": "Tohoku",
+    "centroidLat": 38.44688,
+    "centroidLng": 140.92404
+  },
+  {
+    "id": 5,
+    "nameJa": "秋田県",
+    "nameEn": "Akita",
+    "region": "Tohoku",
+    "centroidLat": 39.74533,
+    "centroidLng": 140.41404
+  },
+  {
+    "id": 6,
+    "nameJa": "山形県",
+    "nameEn": "Yamagata",
+    "region": "Tohoku",
+    "centroidLat": 38.44841,
+    "centroidLng": 140.10216
+  },
+  {
+    "id": 7,
+    "nameJa": "福島県",
+    "nameEn": "Fukushima",
+    "region": "Tohoku",
+    "centroidLat": 37.37887,
+    "centroidLng": 140.22327
+  },
+  {
+    "id": 8,
+    "nameJa": "茨城県",
+    "nameEn": "Ibaraki",
+    "region": "Kanto",
+    "centroidLat": 36.30361,
+    "centroidLng": 140.31955
+  },
+  {
+    "id": 9,
+    "nameJa": "栃木県",
+    "nameEn": "Tochigi",
+    "region": "Kanto",
+    "centroidLat": 36.68991,
+    "centroidLng": 139.81922
+  },
+  {
+    "id": 10,
+    "nameJa": "群馬県",
+    "nameEn": "Gunma",
+    "region": "Kanto",
+    "centroidLat": 36.50447,
+    "centroidLng": 138.98561
+  },
+  {
+    "id": 11,
+    "nameJa": "埼玉県",
+    "nameEn": "Saitama",
+    "region": "Kanto",
+    "centroidLat": 35.9971,
+    "centroidLng": 139.34765
+  },
+  {
+    "id": 12,
+    "nameJa": "千葉県",
+    "nameEn": "Chiba",
+    "region": "Kanto",
+    "centroidLat": 35.51014,
+    "centroidLng": 140.19896
+  },
+  {
+    "id": 13,
+    "nameJa": "東京都",
+    "nameEn": "Tokyo",
+    "region": "Kanto",
+    "centroidLat": 35.71273,
+    "centroidLng": 139.44235
+  },
+  {
+    "id": 14,
+    "nameJa": "神奈川県",
+    "nameEn": "Kanagawa",
+    "region": "Kanto",
+    "centroidLat": 35.41493,
+    "centroidLng": 139.33576
+  },
+  {
+    "id": 15,
+    "nameJa": "新潟県",
+    "nameEn": "Niigata",
+    "region": "Chubu",
+    "centroidLat": 37.48284,
+    "centroidLng": 138.95702
+  },
+  {
+    "id": 16,
+    "nameJa": "富山県",
+    "nameEn": "Toyama",
+    "region": "Chubu",
+    "centroidLat": 36.63747,
+    "centroidLng": 137.26935
+  },
+  {
+    "id": 17,
+    "nameJa": "石川県",
+    "nameEn": "Ishikawa",
+    "region": "Chubu",
+    "centroidLat": 36.76492,
+    "centroidLng": 136.76853
+  },
+  {
+    "id": 18,
+    "nameJa": "福井県",
+    "nameEn": "Fukui",
+    "region": "Chubu",
+    "centroidLat": 35.84664,
+    "centroidLng": 136.22473
+  },
+  {
+    "id": 19,
+    "nameJa": "山梨県",
+    "nameEn": "Yamanashi",
+    "region": "Chubu",
+    "centroidLat": 35.61237,
+    "centroidLng": 138.6115
+  },
+  {
+    "id": 20,
+    "nameJa": "長野県",
+    "nameEn": "Nagano",
+    "region": "Chubu",
+    "centroidLat": 36.13214,
+    "centroidLng": 138.04553
+  },
+  {
+    "id": 21,
+    "nameJa": "岐阜県",
+    "nameEn": "Gifu",
+    "region": "Chubu",
+    "centroidLat": 35.77868,
+    "centroidLng": 137.05592
+  },
+  {
+    "id": 22,
+    "nameJa": "静岡県",
+    "nameEn": "Shizuoka",
+    "region": "Chubu",
+    "centroidLat": 35.02161,
+    "centroidLng": 138.33738
+  },
+  {
+    "id": 23,
+    "nameJa": "愛知県",
+    "nameEn": "Aichi",
+    "region": "Chubu",
+    "centroidLat": 35.03594,
+    "centroidLng": 137.21181
+  },
+  {
+    "id": 24,
+    "nameJa": "三重県",
+    "nameEn": "Mie",
+    "region": "Kansai",
+    "centroidLat": 34.50788,
+    "centroidLng": 136.3744
+  },
+  {
+    "id": 25,
+    "nameJa": "滋賀県",
+    "nameEn": "Shiga",
+    "region": "Kansai",
+    "centroidLat": 35.21583,
+    "centroidLng": 136.13806
+  },
+  {
+    "id": 26,
+    "nameJa": "京都府",
+    "nameEn": "Kyoto",
+    "region": "Kansai",
+    "centroidLat": 35.25379,
+    "centroidLng": 135.44334
+  },
+  {
+    "id": 27,
+    "nameJa": "大阪府",
+    "nameEn": "Osaka",
+    "region": "Kansai",
+    "centroidLat": 34.62132,
+    "centroidLng": 135.50837
+  },
+  {
+    "id": 28,
+    "nameJa": "兵庫県",
+    "nameEn": "Hyōgo",
+    "region": "Kansai",
+    "centroidLat": 35.09374,
+    "centroidLng": 134.82728
+  },
+  {
+    "id": 29,
+    "nameJa": "奈良県",
+    "nameEn": "Nara",
+    "region": "Kansai",
+    "centroidLat": 34.31745,
+    "centroidLng": 135.87164
+  },
+  {
+    "id": 30,
+    "nameJa": "和歌山県",
+    "nameEn": "Wakayama",
+    "region": "Kansai",
+    "centroidLat": 33.91259,
+    "centroidLng": 135.50523
+  },
+  {
+    "id": 31,
+    "nameJa": "鳥取県",
+    "nameEn": "Tottori",
+    "region": "Chugoku",
+    "centroidLat": 35.35907,
+    "centroidLng": 133.8636
+  },
+  {
+    "id": 32,
+    "nameJa": "島根県",
+    "nameEn": "Shimane",
+    "region": "Chugoku",
+    "centroidLat": 35.0063,
+    "centroidLng": 132.51627
+  },
+  {
+    "id": 33,
+    "nameJa": "岡山県",
+    "nameEn": "Okayama",
+    "region": "Chugoku",
+    "centroidLat": 34.90512,
+    "centroidLng": 133.81485
+  },
+  {
+    "id": 34,
+    "nameJa": "広島県",
+    "nameEn": "Hiroshima",
+    "region": "Chugoku",
+    "centroidLat": 34.62145,
+    "centroidLng": 132.78881
+  },
+  {
+    "id": 35,
+    "nameJa": "山口県",
+    "nameEn": "Yamaguchi",
+    "region": "Chugoku",
+    "centroidLat": 34.21112,
+    "centroidLng": 131.55189
+  },
+  {
+    "id": 36,
+    "nameJa": "徳島県",
+    "nameEn": "Tokushima",
+    "region": "Shikoku",
+    "centroidLat": 33.9182,
+    "centroidLng": 134.23982
+  },
+  {
+    "id": 37,
+    "nameJa": "香川県",
+    "nameEn": "Kagawa",
+    "region": "Shikoku",
+    "centroidLat": 34.21372,
+    "centroidLng": 133.97476
+  },
+  {
+    "id": 38,
+    "nameJa": "愛媛県",
+    "nameEn": "Ehime",
+    "region": "Shikoku",
+    "centroidLat": 33.60471,
+    "centroidLng": 132.85408
+  },
+  {
+    "id": 39,
+    "nameJa": "高知県",
+    "nameEn": "Kochi",
+    "region": "Shikoku",
+    "centroidLat": 33.42393,
+    "centroidLng": 133.36897
+  },
+  {
+    "id": 40,
+    "nameJa": "福岡県",
+    "nameEn": "Fukuoka",
+    "region": "Kyushu-Okinawa",
+    "centroidLat": 33.52407,
+    "centroidLng": 130.66772
+  },
+  {
+    "id": 41,
+    "nameJa": "佐賀県",
+    "nameEn": "Saga",
+    "region": "Kyushu-Okinawa",
+    "centroidLat": 33.2853,
+    "centroidLng": 130.11727
+  },
+  {
+    "id": 42,
+    "nameJa": "長崎県",
+    "nameEn": "Nagasaki",
+    "region": "Kyushu-Okinawa",
+    "centroidLat": 32.94758,
+    "centroidLng": 129.92396
+  },
+  {
+    "id": 43,
+    "nameJa": "熊本県",
+    "nameEn": "Kumamoto",
+    "region": "Kyushu-Okinawa",
+    "centroidLat": 32.64257,
+    "centroidLng": 130.83207
+  },
+  {
+    "id": 44,
+    "nameJa": "大分県",
+    "nameEn": "Oita",
+    "region": "Kyushu-Okinawa",
+    "centroidLat": 33.2006,
+    "centroidLng": 131.43165
+  },
+  {
+    "id": 45,
+    "nameJa": "宮崎県",
+    "nameEn": "Miyazaki",
+    "region": "Kyushu-Okinawa",
+    "centroidLat": 32.19318,
+    "centroidLng": 131.29899
+  },
+  {
+    "id": 46,
+    "nameJa": "鹿児島県",
+    "nameEn": "Kagoshima",
+    "region": "Kyushu-Okinawa",
+    "centroidLat": 31.63704,
+    "centroidLng": 130.63125
+  },
+  {
+    "id": 47,
+    "nameJa": "沖縄県",
+    "nameEn": "Okinawa",
+    "region": "Kyushu-Okinawa",
+    "centroidLat": 26.49375,
+    "centroidLng": 127.95975
+  }
+]
