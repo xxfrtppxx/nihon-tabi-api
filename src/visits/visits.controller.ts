@@ -15,6 +15,7 @@ import { VisitsService } from './visits.service';
 import { CreateVisitDto } from './dto/create-visit.dto';
 import { UpdateVisitDto } from './dto/update-visit.dto';
 import { AddPhotoDto } from './dto/add-photo.dto';
+import { PresignPhotoDto } from './dto/presign-photo.dto';
 import { ListVisitsQueryDto } from './dto/list-visits-query.dto';
 
 @Controller()
@@ -50,6 +51,15 @@ export class VisitsController {
   @Delete('visits/:id')
   remove(@CurrentUser() user: { userId: string }, @Param('id') id: string) {
     return this.visitsService.remove(user.userId, id);
+  }
+
+  @Post('visits/:id/photos/presign')
+  presignPhoto(
+    @CurrentUser() user: { userId: string },
+    @Param('id') id: string,
+    @Body() dto: PresignPhotoDto,
+  ) {
+    return this.visitsService.presignPhoto(user.userId, id, dto);
   }
 
   @Post('visits/:id/photos')

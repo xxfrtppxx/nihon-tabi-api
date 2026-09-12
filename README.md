@@ -55,6 +55,8 @@ npm run start:dev           # http://localhost:3000
 
 ทดสอบแล้วด้วยมือ (register → login → /users/me → สร้าง visit → mark ownership guard → logout invalidate refresh token → /stats/me) ทำงานถูกต้องครบทุกเคส
 
+`WEB_ORIGIN` ใน `.env` ต้องตรงกับ origin จริงของ `nihon-tabi-web` (เช่น `http://localhost:3001` ตอน dev, โดเมน Vercel จริงตอน deploy) — ใช้ตั้งค่า CORS ให้อนุญาต credentials (cookie) จาก origin นั้นเท่านั้น ผิดแล้ว refresh token cookie จะไม่ถูกส่ง/รับ
+
 ## Endpoints ที่ implement แล้ว
 
 ```
@@ -75,10 +77,35 @@ GET    /visits?prefectureId=&status=      (ต้องมี access token, ก�
 POST   /visits
 PATCH  /visits/:id
 DELETE /visits/:id
-POST   /visits/:id/photos
+POST   /visits/:id/photos/presign  -- ขอ presigned PUT URL ไป R2 (body: { contentType })
+POST   /visits/:id/photos          -- บันทึก url หลังอัปโหลดขึ้น R2 สำเร็จแล้ว
 DELETE /photos/:id
 
 GET    /stats/me
 ```
 
-ยังไม่ทำ: Swagger docs (`@nestjs/swagger`), presigned upload URL ไป Cloudflare R2 (ตอนนี้ `POST /visits/:id/photos` รับ `url` ที่อัปโหลดไว้แล้วมาบันทึกเฉยๆ)
+ยังไม่ทำ: Swagger docs (`@nestjs/swagger`)
+
+## Auth: refresh token
+
+`register`/`login`/`refresh` ตั้ง refresh token เป็น httpOnly cookie (`Secure; SameSite=None; Path=/auth`) ให้อัตโนมัติ — เว็บไม่ต้องเก็บ/ส่งเองเลย (แค่ต้องเรียก fetch ด้วย `credentials: "include"`) ส่วน response body ยังมี `refreshToken` แถมมาด้วยเผื่อ client ที่ไม่มี cookie jar แบบเบราว์เซอร์ (เช่น Android ตาม SYSTEM_DESIGN.md) — `POST /auth/refresh` รับ token จาก cookie ก่อน ถ้าไม่มีค่อย fallback ไปอ่านจาก body `{ refreshToken }`
+
+## Photo upload (Cloudflare R2)
+
+Client (web/Android) ขอ presigned URL จาก `POST /visits/:id/photos/presign` แล้วอัปโหลดไฟล์ตรงไปที่ R2 ด้วย `PUT` (ไม่ผ่าน backend) จากนั้นเรียก `POST /visits/:id/photos` เพื่อบันทึก public URL ลง DB
+
+ต้องตั้งค่าใน `.env` ก่อนใช้งานจริง:
+
+```
+R2_ACCOUNT_ID=...
+R2_ACCESS_KEY_ID=...
+R2_SECRET_ACCESS_KEY=...
+R2_BUCKET_NAME=...
+R2_PUBLIC_URL=https://pub-xxxxxxxx.r2.dev
+```
+
+ขั้นตอนสร้างใน Cloudflare dashboard:
+1. R2 → Create bucket
+2. เปิด public access ของ bucket (Settings → Public access → Allow Access ผ่าน r2.dev subdomain) แล้วคัดลอก URL มาใส่ `R2_PUBLIC_URL`
+3. R2 → Manage API tokens → สร้าง token ที่มีสิทธิ์ Object Read & Write เฉพาะ bucket นี้ → เอา Access Key ID / Secret Access Key มาใส่ `.env`
+4. Account ID ดูได้จากมุมขวาบนของหน้า R2 overview
