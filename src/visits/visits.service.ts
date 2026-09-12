@@ -12,6 +12,11 @@ import { ListVisitsQueryDto } from './dto/list-visits-query.dto';
 export class VisitsService {
   constructor(private readonly prisma: PrismaService) {}
 
+  private readonly visitInclude = {
+    photos: true,
+    municipality: { include: { prefecture: true } },
+  } as const;
+
   findAll(userId: string, query: ListVisitsQueryDto) {
     return this.prisma.visit.findMany({
       where: {
@@ -21,7 +26,7 @@ export class VisitsService {
           ? { prefectureId: query.prefectureId }
           : undefined,
       },
-      include: { photos: true },
+      include: this.visitInclude,
       orderBy: { createdAt: 'desc' },
     });
   }
@@ -55,7 +60,7 @@ export class VisitsService {
         note: dto.note,
         rating: dto.rating,
       },
-      include: { photos: true },
+      include: this.visitInclude,
     });
   }
 
@@ -69,7 +74,7 @@ export class VisitsService {
         note: dto.note,
         rating: dto.rating,
       },
-      include: { photos: true },
+      include: this.visitInclude,
     });
   }
 
