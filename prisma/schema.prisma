@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum VisitStatus {
+  visited
+  want_to_go
+}
+
+model User {
+  id               String   @id @default(uuid())
+  email            String   @unique
+  passwordHash     String   @map("password_hash")
+  displayName      String   @map("display_name")
+  avatarUrl        String?  @map("avatar_url")
+  refreshTokenHash String?  @map("refresh_token_hash")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  visits Visit[]
+
+  @@map("users")
+}
+
+model Prefecture {
+  id           Int     @id
+  nameJa       String  @map("name_ja")
+  nameEn       String  @map("name_en")
+  region       String
+  centroidLat  Float?  @map("centroid_lat")
+  centroidLng  Float?  @map("centroid_lng")
+
+  municipalities Municipality[]
+
+  @@map("prefectures")
+}
+
+model Municipality {
+  id           Int     @id
+  prefectureId Int     @map("prefecture_id")
+  nameJa       String  @map("name_ja")
+  nameEn       String  @map("name_en")
+  type         String
+  centroidLat  Float?  @map("centroid_lat")
+  centroidLng  Float?  @map("centroid_lng")
+
+  prefecture Prefecture @relation(fields: [prefectureId], references: [id])
+  visits     Visit[]
+
+  @@map("municipalities")
+}
+
+model Visit {
+  id             String      @id @default(uuid())
+  userId         String      @map("user_id")
+  municipalityId Int         @map("municipality_id")
+  status         VisitStatus
+  visitedOn      DateTime?   @map("visited_on") @db.Date
+  note           String?
+  rating         Int?
+  createdAt      DateTime    @default(now()) @map("created_at")
+  updatedAt      DateTime    @updatedAt @map("updated_at")
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  municipality Municipality  @relation(fields: [municipalityId], references: [id])
+  photos       VisitPhoto[]
+
+  @@map("visits")
+}
+
+model VisitPhoto {
+  id        String   @id @default(uuid())
+  visitId   String   @map("visit_id")
+  url       String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  visit Visit @relation(fields: [visitId], references: [id], onDelete: Cascade)
+
+  @@map("visit_photos")
+}
