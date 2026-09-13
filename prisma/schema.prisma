@@ -23,6 +23,7 @@ model User {
   updatedAt        DateTime @updatedAt @map("updated_at")
 
   visits Visit[]
+  trips  Trip[]
 
   @@map("users")
 }
@@ -51,6 +52,7 @@ model Municipality {
 
   prefecture Prefecture @relation(fields: [prefectureId], references: [id])
   visits     Visit[]
+  tripDays   TripDay[]
 
   @@map("municipalities")
 }
@@ -82,4 +84,33 @@ model VisitPhoto {
   visit Visit @relation(fields: [visitId], references: [id], onDelete: Cascade)
 
   @@map("visit_photos")
+}
+
+model Trip {
+  id        String    @id @default(uuid())
+  userId    String    @map("user_id")
+  title     String
+  startDate DateTime? @map("start_date") @db.Date
+  endDate   DateTime? @map("end_date") @db.Date
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  user User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  days TripDay[]
+
+  @@map("trips")
+}
+
+model TripDay {
+  id             String  @id @default(uuid())
+  tripId         String  @map("trip_id")
+  dayNumber      Int     @map("day_number")
+  municipalityId Int     @map("municipality_id")
+  note           String?
+
+  trip         Trip         @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  municipality Municipality @relation(fields: [municipalityId], references: [id])
+
+  @@unique([tripId, dayNumber])
+  @@map("trip_days")
 }
