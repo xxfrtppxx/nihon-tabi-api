@@ -19,6 +19,7 @@ src/
   users/           -- profile ของ user ปัจจุบัน (GET/PATCH /users/me)
   geo/             -- prefectures, municipalities (read-only, metadata จาก DB)
   visits/          -- CRUD visits + photos
+  trips/           -- CRUD trips + days (จัดกลุ่ม visit เป็นทริป)
   stats/           -- GET /stats/me
   prisma/          -- PrismaService, PrismaModule
 prisma/
@@ -35,7 +36,7 @@ geo-data/
 
 ## Data model
 
-ดูรายละเอียด entity ทั้งหมดที่ SYSTEM_DESIGN.md ส่วน "Data model (core)" — ย่อ: `users`, `prefectures`, `municipalities`, `visits`, `visit_photos`
+ดูรายละเอียด entity ทั้งหมดที่ SYSTEM_DESIGN.md ส่วน "Data model (core)" — ย่อ: `users`, `prefectures`, `municipalities`, `visits`, `visit_photos`, `trips`, `trip_days`
 
 ## Map data (GADM → GeoJSON → seed)
 
@@ -82,7 +83,18 @@ POST   /visits/:id/photos          -- บันทึก url หลังอั�
 DELETE /photos/:id
 
 GET    /stats/me
+
+GET    /trips                       (ต้องมี access token, เฉพาะของ user)
+GET    /trips/:id
+POST   /trips                       -- body: { title, startDate?, endDate?, days?: [{ dayNumber, municipalityId, note? }] }
+PATCH  /trips/:id                   -- แก้ title/startDate/endDate เท่านั้น (days จัดการผ่าน endpoint แยก)
+DELETE /trips/:id
+POST   /trips/:id/days              -- body: { dayNumber, municipalityId, note? } — dayNumber ซ้ำในทริปเดียวกัน = 409
+PATCH  /trips/:id/days/:dayId
+DELETE /trips/:id/days/:dayId
 ```
+
+`cityCount`/`dayCount`/`totalKm` ในทุก response ของ trip คำนวณสดจาก days จริงทุกครั้ง (ไม่ได้เก็บไว้) — `totalKm` รวมระยะทางแบบเส้นตรง (haversine) ระหว่าง centroid ของเมืองในแต่ละวันตามลำดับ `dayNumber`
 
 ยังไม่ทำ: Swagger docs (`@nestjs/swagger`)
 
