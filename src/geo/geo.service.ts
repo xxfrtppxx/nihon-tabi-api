@@ -5,8 +5,15 @@ import { PrismaService } from '../prisma/prisma.service';
 export class GeoService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAllPrefectures() {
-    return this.prisma.prefecture.findMany({ orderBy: { id: 'asc' } });
+  async findAllPrefectures() {
+    const prefectures = await this.prisma.prefecture.findMany({
+      orderBy: { id: 'asc' },
+      include: { _count: { select: { municipalities: true } } },
+    });
+    return prefectures.map(({ _count, ...prefecture }) => ({
+      ...prefecture,
+      municipalityCount: _count.municipalities,
+    }));
   }
 
   async findMunicipalitiesByPrefecture(prefectureId: number) {
